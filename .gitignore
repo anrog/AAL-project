@@ -26,3 +26,8 @@
 *.exe
 *.out
 *.app
+main
+
+# vim .swp and .swo files
+.*.swp
+.*.swo
