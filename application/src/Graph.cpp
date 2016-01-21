@@ -10,7 +10,7 @@
 
 graph::graph( unsigned node_number, bool dense )
 {
-	
+
 }
 
 graph::graph( std::string filename )

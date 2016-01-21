@@ -16,9 +16,9 @@
 class edge
 {
 public:
-	edge( hours_array );
+	edge( hours_array arr );
 
-	edge( hours_t = 0 );
+	edge( hours_t n = 0 );
 
 	bool operator==( const edge & that ) const;
 

@@ -11,7 +11,10 @@ OBJ_FILES := $(addprefix obj/,$(notdir $(CPP_FILES:.cpp=.o)))
 opt: CXXFLAGS += -O3
 opt: all
 
-all: main
+dir:
+	mkdir -p obj
+
+all: dir main
 
 debug: CXXFLAGS += -DDEBUG -ggdb3
 debug: all
