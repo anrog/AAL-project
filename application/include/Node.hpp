@@ -25,6 +25,8 @@ public:
 
 	unsigned getNumber() const;
 
+	virtual void print() const = 0;
+
 protected:
 	unsigned number;
 };
@@ -41,7 +43,7 @@ public:
 
 	virtual void addEdge( unsigned target, edge e );
 	
-
+	virtual void print() const;
 private:
 	std::map<unsigned, edge> edges;
 };
@@ -58,6 +60,7 @@ public:
 
 	virtual void addEdge( unsigned target, edge e );
 
+	virtual void print() const;
 private:
 	std::vector<edge> edges;
 

@@ -24,6 +24,8 @@ public:
 
 	hours_t operator[]( unsigned short n ) const;
 
+	void print() const;
+
 private:
 	hours_array weights;
 };

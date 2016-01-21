@@ -10,7 +10,9 @@
 
 int main ( int argc, char ** argv )
 {
-	graph g = graph( 1000, false );
+	graph g = graph( 30, false );
+
+	g.print();
 
 	
 

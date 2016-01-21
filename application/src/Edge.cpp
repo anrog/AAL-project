@@ -45,3 +45,12 @@ hours_t edge::operator[]( unsigned short n ) const
 	return weights[ n ];
 }
 
+#include <iostream>
+#include <iomanip>
+
+void edge::print() const
+{
+	for( unsigned i = 0; i< WEIGHTS_NUMBER; ++i )
+		std::cout << std::setw(2) << (unsigned)weights[ i ] << " ";
+}
+

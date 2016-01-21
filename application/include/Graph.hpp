@@ -22,6 +22,8 @@ public:
 	
 	const node * operator[]( unsigned n ) const;
 
+	void print() const;
+
 private:
 	std::vector<node*> nodes;
 };
