@@ -7,6 +7,7 @@
  */
 
 #include "Edge.hpp"
+#include "roll.hpp"
 
 edge::edge( hours_array arr )
 {
@@ -14,10 +15,20 @@ edge::edge( hours_array arr )
 		weights[i] = arr[i];
 }
 
-edge::edge( hours_t n )
+edge::edge( bool uniform, hours_t min, hours_t max )
 {
-	for( unsigned i = 0; i < WEIGHTS_NUMBER; ++i )
-		weights[i] = n;
+	if( uniform )
+		for( unsigned i = 0; i < WEIGHTS_NUMBER; ++i)
+			weights[i] = rollUniform( min, max );
+
+	else
+	{
+		hours_t value = ( max + min ) / 2;
+		
+		for( unsigned i = 0; i < WEIGHTS_NUMBER; ++i)
+			weights[i] = rollBinomial( value, min, max );
+	}
+
 }
 
 bool edge::operator==( const edge & that ) const

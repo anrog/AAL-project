@@ -8,12 +8,21 @@
 
 #include "Node.hpp"
 
+node::node( unsigned n ) : number(n)
+{
+
+}
+
 unsigned node::getNumber() const
 {
 	return number;
 }
 
 
+node_sparse::node_sparse( unsigned n ) : node( n )
+{
+
+}
 
 const edge & node_sparse::operator[]( unsigned n ) const
 {
@@ -27,9 +36,16 @@ const edge & node_sparse::operator[]( unsigned n ) const
 	}
 }
 
+
+node_dense::node_dense( unsigned n ) : node( n )
+{
+
+}
+
 void node_sparse::addEdge( unsigned target, edge e )
 {
 	edges[ target ] = e;
+	++number;
 }
 
 
@@ -41,4 +57,5 @@ const edge & node_dense::operator[]( unsigned n ) const
 void node_dense::addEdge( unsigned target, edge e )
 {
 	edges[ target ] = e;
+	++number;
 }

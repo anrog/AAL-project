@@ -17,13 +17,15 @@
 class node
 {
 public:
+	node( unsigned n );
+
 	virtual const edge & operator[]( unsigned n ) const = 0;
 
 	virtual void addEdge( unsigned target, edge e ) = 0;
 
 	unsigned getNumber() const;
 
-private:
+protected:
 	unsigned number;
 };
 
@@ -33,6 +35,8 @@ private:
 class node_sparse final : public node
 {
 public:
+	node_sparse( unsigned n = 0 );
+
 	virtual const edge & operator[]( unsigned n ) const;
 
 	virtual void addEdge( unsigned target, edge e );
@@ -48,6 +52,8 @@ private:
 class node_dense final : public node
 {
 public:
+	node_dense( unsigned n = 0 );
+
 	virtual const edge & operator[]( unsigned n ) const;
 
 	virtual void addEdge( unsigned target, edge e );

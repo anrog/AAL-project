@@ -18,7 +18,7 @@ class edge
 public:
 	edge( hours_array arr );
 
-	edge( hours_t n = 0 );
+	edge( bool uniform = true, hours_t min = WIEGHT_MIN, hours_t max = WIEGHT_MAX );
 
 	bool operator==( const edge & that ) const;
 
@@ -28,6 +28,8 @@ private:
 	hours_array weights;
 };
 
-const edge NULL_EDGE = edge();
+const static hours_array a = {0};
+
+const edge NULL_EDGE = edge( a );
 
 #endif // EDGE_HPP
