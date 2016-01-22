@@ -11,7 +11,7 @@
 #include "Graph.hpp"
 #include "roll.hpp"
 
-graph::graph( unsigned node_number, bool dense )
+graph::graph( unsigned node_number, bool dense ) : dense(dense)
 {
 	double p;
 
@@ -25,20 +25,21 @@ graph::graph( unsigned node_number, bool dense )
 
 	if( dense )
 		for( unsigned i = 0; i < node_number; ++i )
-			nodes[ i ] = new node_dense();
+			nodes[ i ] = new node_dense(node_number);
 	else
 		for( unsigned i = 0; i < node_number; ++i )
-			nodes[ i ] = new node_sparse();
+			nodes[ i ] = new node_sparse(node_number);
 
 	for( unsigned i = 1; i < node_number; ++i )
-	{	       
+	{	   
+
 		unsigned r = rollUniform( 0, i-1 );	
 
-		edge e1 = edge();
+		edge e1 = edge( nodes[i]->get_x(), nodes[i]->get_y(), nodes[r]->get_x(), nodes[r]->get_y() );
 
 		nodes[ i ]->addEdge( r, e1 );
 
-		edge e2 = edge();
+		edge e2 = edge( nodes[i]->get_x(), nodes[i]->get_y(), nodes[r]->get_x(), nodes[r]->get_y() );
 
 		nodes[ r ]->addEdge( i, e2 );
 
@@ -46,11 +47,11 @@ graph::graph( unsigned node_number, bool dense )
 		{
 			if( rollBinary( p ) )
 			{
-				edge ed1 = edge();
+				edge ed1 = edge(nodes[i]->get_x(), nodes[i]->get_y(), nodes[j]->get_x(), nodes[j]->get_y());
 
 				nodes[i]->addEdge( j, ed1 );
 
-				edge ed2 = edge();
+				edge ed2 = edge(nodes[i]->get_x(), nodes[i]->get_y(), nodes[j]->get_x(), nodes[j]->get_y());
 
 				nodes[j]->addEdge( i, ed2 );
 			}	
@@ -60,11 +61,11 @@ graph::graph( unsigned node_number, bool dense )
 		{
 			if( rollBinary( p ) )
 			{
-				edge ed1 = edge();
+				edge ed1 = edge(nodes[i]->get_x(), nodes[i]->get_y(), nodes[j]->get_x(), nodes[j]->get_y());
 
 				nodes[i]->addEdge( j, ed1 );
 
-				edge ed2 = edge();
+				edge ed2 = edge(nodes[i]->get_x(), nodes[i]->get_y(), nodes[j]->get_x(), nodes[j]->get_y());
 
 				nodes[j]->addEdge( i, ed2 );
 			}
@@ -77,9 +78,19 @@ graph::graph( std::string filename )
 
 }	
 
+bool graph::isDense() const
+{
+	return dense;
+}
+
+unsigned graph::size() const
+{
+	return nodes.size();
+}
+
 const node * graph::operator[]( unsigned n ) const
 {
-	return nullptr;
+	return nodes[n];
 }
 
 void graph::print() const

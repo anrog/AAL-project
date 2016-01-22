@@ -26,7 +26,7 @@ obj/%.o: src/%.cpp
 	$(CXX) $(CXXFLAGS) -c -o $@ $<
 
 clean:
-	rm -f *.o
+	rm -f $(OBJ_FILES)
 	rm -f main
 
 .PHONY: all clean

@@ -19,6 +19,10 @@ public:
 	graph( unsigned node_number, bool dense );
 
 	graph( std::string filename );
+
+	bool isDense() const;
+
+	unsigned size() const;
 	
 	const node * operator[]( unsigned n ) const;
 
@@ -26,6 +30,8 @@ public:
 
 private:
 	std::vector<node*> nodes;
+
+	bool dense;
 };
 
 #endif // GRAPH_HPP

@@ -5,7 +5,7 @@ bool rollBinary( double p )
 
 	static std::random_device rdev{};
 	static std::default_random_engine e{rdev()};
-	static std::bernoulli_distribution d(p);
+	std::bernoulli_distribution d(p);
 
 	return d(e);
 }

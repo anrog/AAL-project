@@ -11,6 +11,7 @@
 
 #include <array>
 #include "types.hpp"
+#include "Node.hpp"
 
 
 class edge
@@ -20,9 +21,13 @@ public:
 
 	edge( bool uniform = true, hours_t min = WIEGHT_MIN, hours_t max = WIEGHT_MAX );
 
+	edge( unsigned x1, unsigned y1, unsigned x2, unsigned y2 );
+
 	bool operator==( const edge & that ) const;
 
 	hours_t operator[]( unsigned short n ) const;
+
+	hours_t getDistance( hours_t time ) const;
 
 	void print() const;
 

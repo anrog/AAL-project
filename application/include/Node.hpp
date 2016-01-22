@@ -17,7 +17,7 @@
 class node
 {
 public:
-	node( unsigned n );
+	node( unsigned nodes, unsigned n );
 
 	virtual const edge & operator[]( unsigned n ) const = 0;
 
@@ -27,7 +27,12 @@ public:
 
 	virtual void print() const = 0;
 
+	unsigned get_x() const;
+	unsigned get_y() const;
+
 protected:
+	unsigned x;
+	unsigned y;
 	unsigned number;
 };
 
@@ -37,13 +42,17 @@ protected:
 class node_sparse final : public node
 {
 public:
-	node_sparse( unsigned n = 0 );
+	node_sparse( unsigned nodes, unsigned n = 0 );
 
 	virtual const edge & operator[]( unsigned n ) const;
 
 	virtual void addEdge( unsigned target, edge e );
 	
 	virtual void print() const;
+
+	map_iter begin() const;
+
+	map_iter end() const;
 private:
 	std::map<unsigned, edge> edges;
 };
@@ -54,7 +63,7 @@ private:
 class node_dense final : public node
 {
 public:
-	node_dense( unsigned n = 0 );
+	node_dense( unsigned nodes, unsigned n = 0 );
 
 	virtual const edge & operator[]( unsigned n ) const;
 
