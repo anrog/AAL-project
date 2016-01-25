@@ -21,6 +21,7 @@ void pathfinder::find_path( unsigned start, unsigned end, std::forward_list<unsi
 {
 	hours_t best_hour = 0;
 
+	// dla każdej godziny powtórz algorytm dijkstry i wybierz najlepszy uzyskany czas
 	for( unsigned i = 0; i < HOURS; ++i )
 	{
 		unsigned time = dijkstra( start, end, i );
@@ -61,6 +62,8 @@ unsigned pathfinder::dijkstra( unsigned start, unsigned end, hours_t start_hour 
 {
 	DBG( "dijkstra( " << start << ", " << end << ", " << (unsigned)start_hour << " )");
 
+	// ustaw dystans do węzłów na DISTANCE_MAX dla wszystkich poza początkowym
+	// początkowy ma dystans 0 
 	for( unsigned i = 0; i < start; ++i )
 		current[i] = search_node( i );
 
@@ -69,13 +72,13 @@ unsigned pathfinder::dijkstra( unsigned start, unsigned end, hours_t start_hour 
 	for( unsigned i = start + 1; i < nodes; ++i )
 		current[i] = search_node( i );
 
-	//for( unsigned i = 0; i < nodes; ++i )
-	//	queue.push( current[i] );
-
+	// wstaw węzeł początkowy do kolejki priorytetowej
 	queue.push( current[start] );
 
+	// dopóki są węzły w kolejce
 	while( !queue.empty() )
 	{
+		// zdejmij z kolejki najbliższy węzeł
 		search_node node = queue.top();
 
 		queue.pop();
@@ -86,25 +89,31 @@ unsigned pathfinder::dijkstra( unsigned start, unsigned end, hours_t start_hour 
 
 		hours_t hour = node.hour;
 
+		// nic nie rób jeśli to był węzeł już przetworzony
 		if( distance <= current[number].distance )
 		{
 			if( _graph->isDense() )
 			{
+				// dla każdego wierzchołka
 				for( unsigned i = 0; i < nodes; ++i )
 				{
+					// jeśli nie jest sąsiadem - nic nie rób
 					if( (*(*_graph)[number])[i] == NULL_EDGE )
 						continue;
 
 					hours_t d = (*(*_graph)[number])[i].getDistance( hour );
 
+					// jeśli przez zdjety węzel można dotrzeć do sąsiada szybciej niż dotychczas
 					if( current[i].distance > distance + d )
 					{
+						// ustaw nowy dystans, czas dotarcia i poprzednika
 						current[i].distance = distance + d;
 
 						current[i].hour = ( hour + d ) % HOURS;
 
 						current[i].previous = number;
 
+						// wstaw zmodyfikowany węzeł do kolejki
 						queue.push( current[i] );
 					}
 				}
@@ -113,20 +122,24 @@ unsigned pathfinder::dijkstra( unsigned start, unsigned end, hours_t start_hour 
 			{
 				const node_sparse * n = static_cast<const node_sparse *>( (*_graph)[number] );
 
+				// dla każdego sąsiada
 				for( map_iter it = n->begin(); it != n->end(); ++it )
 				{
 					unsigned i = it->first;
 
 					hours_t d = (*(*_graph)[number])[i].getDistance( hour );
 
+					// jeśli przez zdjety węzel można dotrzeć do sąsiada szybciej niż dotychczas
 					if( current[i].distance > distance + d )
 					{
+						// ustaw nowy dystans, czas dotarcia i poprzednika
 						current[i].distance = distance + d;
 
 						current[i].hour = ( hour + d ) % HOURS;
 
 						current[i].previous = number;
 
+						// wstaw zmodyfikowany węzeł do kolejki
 						queue.push( current[i] );
 					}
 

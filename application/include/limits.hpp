@@ -21,4 +21,6 @@ const unsigned short HOURS_PER_WEIGHT = 6;
 
 const unsigned DISTANCE_MAX = std::numeric_limits<unsigned>::max();
 
+const unsigned GRAPH_MAX_SIZE = 10000;
+
 #endif // LIMITS_HPP
